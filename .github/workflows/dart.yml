@@ -37,9 +37,7 @@ jobs:
         with:
           channel: 'stable'
           
-      
-        run: cd dart; flutter pub get
-
+      - name: flutter doctor
       - run: cd dart; flutter doctor
 
       - name: Run tests
