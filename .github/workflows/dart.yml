@@ -27,8 +27,6 @@ jobs:
           path: /opt/hostedtoolcache/flutter
           key: ${{ runner.os }}-flutter
 
-        
-
       - name: Checkout code
         uses: actions/checkout@v2
 
@@ -36,8 +34,10 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-          
-      - name: flutter doctor
+
+      - name: Install dependencies
+        run: cd dart; flutter pub get
+
       - run: cd dart; flutter doctor
 
       - name: Run tests
