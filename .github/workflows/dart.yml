@@ -46,13 +46,6 @@ jobs:
       - name: Install dependencies
         run: cd dart; flutter pub get
 
-      - uses: actions/checkout@v3
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: my-artifact
-          path: /Users/runner/work/_temp/cac11075-0c10-4cd3-8c82-65568af05c45.txt
-
       - run: cd dart; flutter doctor
 
       - name: Run tests
