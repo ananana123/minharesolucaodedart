@@ -32,8 +32,6 @@ jobs:
 
       - run: mkdir -p  /home/runner/logs-*.txt
 
-      - run: echo hello >  /home/runner/logs-*.txt
-
       - uses: actions/upload-artifact@v3
         with:
           name: my-artifact
