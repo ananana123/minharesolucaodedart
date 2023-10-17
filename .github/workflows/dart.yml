@@ -48,7 +48,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: my-artifact
-          path:  /home/runner/logs-*.txt
+          path:  /.pub-cache/_temp/Novo Documento de Texto.txt
           
       - name: Install dependencies
       
