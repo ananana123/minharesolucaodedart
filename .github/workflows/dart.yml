@@ -35,13 +35,6 @@ jobs:
         with:
           channel: 'stable'
 
-      - uses: actions/checkout@v3
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: my-artifact
-          path:  /.pub-cache/_temp/Novo Documento de Texto.txt
-
       - name: Install dependencies
         run: cd dart; flutter pub get
 
