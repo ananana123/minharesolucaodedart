@@ -37,6 +37,8 @@ jobs:
 
       - name: Install dependencies
         run: cd dart; flutter pub get
+        
+      - run: flutter pub cache repair
 
       - run: cd dart; flutter doctor
 
