@@ -8,18 +8,12 @@ on:
 
 jobs:
   integration_test:
-   runs-on: macos-latest
-   steps:
-      - name: Check out repository code
-        uses: actions/checkout@v4
-      - name: Install GitHub CLI
-        run: |
-          brew update
-          brew install gh
-      - name: Install Microsoft Edge
-        run: |
-          brew update
-          brew install --cask microsoft-edge
+    runs-on: macos-latest
+    env:
+      IOS_DEVICE: 'iPhone 14 Pro Simulator (16.2)'
+    steps:
+      # - name: List all simulators
+      #   run: xcrun xctrace list devices
 
       - name: Start Simulator
         run: |
@@ -41,13 +35,6 @@ jobs:
         with:
           channel: 'stable'
 
-      - uses: actions/checkout@v3
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: my-artifact
-          path:  /.pub-cache/_temp/Novo Documento de Texto.txt
-          
       - name: Install dependencies
         run: cd dart; flutter pub get
 
