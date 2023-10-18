@@ -42,9 +42,10 @@ jobs:
 
       - name: Run tests
         run: 
+          flutter --enable-telemetry 
           flutter test --update-goldens integration_test/
 
-          flutter --disable-telemetry.
+          
 
       - name: Archive screenshots
         uses: actions/upload-artifact@v2
