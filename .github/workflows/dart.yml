@@ -41,7 +41,7 @@ jobs:
       - run: flutter doctor
 
       - name: Run tests
-        run: flutter --disable-telemetry
+        run: content_copy $ flutter --enable-telemetry 
           flutter test --update-goldens integration_test/
 
           
