@@ -35,9 +35,16 @@ jobs:
         with:
           channel: 'stable'
 
+      - name: Install dependencies
+        run: flutter pub get
+
+      - run: flutter doctor
+
       - name: Run tests
         run: 
           flutter test --update-goldens integration_test/
+
+          flutter --disable-telemetry.
 
       - name: Archive screenshots
         uses: actions/upload-artifact@v2
