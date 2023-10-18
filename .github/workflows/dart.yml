@@ -36,8 +36,7 @@ jobs:
           channel: 'stable'
 
       - name: Run tests
-        run: |
-          cd dart
+        run: 
           flutter test --update-goldens integration_test/
 
       - name: Archive screenshots
