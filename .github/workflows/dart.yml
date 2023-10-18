@@ -36,7 +36,6 @@ jobs:
           channel: 'stable'
 
       - name: Install dependencies
-        run: cd dart; flutter pub get
 
       - run: cd dart; flutter doctor
 
