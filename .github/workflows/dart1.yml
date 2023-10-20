@@ -1,42 +1,50 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
-name: Dart
+name: dart
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    paths:
+      - 'dart/**'
+      - '.github/workflows/dart.yml'
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
+  integration_test:
+    runs-on: macos-latest
+    env:
+      IOS_DEVICE: 'iPhone 14 Pro Simulator (16.2)'
     steps:
-      - uses: actions/checkout@v3
+      # - name: List all simulators
+      #   run: xcrun xctrace list devices
 
-      # Note: This workflow uses the latest stable version of the Dart SDK.
-      # You can specify other versions if desired, see documentation here:
-      # https://github.com/dart-lang/setup-dart/blob/main/README.md
-      # - uses: dart-lang/setup-dart@v1
-      - uses: dart-lang/setup-dart@9a04e6d73cca37bd455e0608d7e5092f881fd603
+      - name: Start Simulator
+        run: |
+          DEVICE=$(xcrun xctrace list devices | grep "^$IOS_DEVICE" | awk '{gsub(/[()]/,""); print $NF; exit}')
+          echo $DEVICE
+          xcrun simctl boot "${DEVICE:?No Simulator with this name found}"
 
-      - name: Install dependencies
-        run: flutter pub get
+      - name: Cache Flutter dependencies
+        uses: actions/cache@v1
+        with:
+          path: /opt/hostedtoolcache/flutter
+          key: ${{ runner.os }}-flutter
 
-      # Uncomment this step to verify the use of 'dart format' on each commit.
-      # - name: Verify formatting
-      #   run: dart format --output=none --set-exit-if-changed .
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      # Consider passing '--fatal-infos' for slightly stricter analysis.
-      - name: Analyze project source
-        run: dart analyze
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
 
-      # Your project will need to have tests in test/ and a dependency on
-      # package:test for this step to succeed. Note that Flutter projects will
-      # want to change this to 'flutter test'.
+
+
       - name: Run tests
-        run: dart test
+        run: |
+          cd dart
+          flutter test --update-goldens integration_test/
+
+      - name: Archive screenshots
+        uses: actions/upload-artifact@v2
+        with:
+          name: screenshots
+          path: dart/screenshots/
+
