@@ -44,7 +44,7 @@ jobs:
       
       - name: adb connection
         run: adb devices
-      - run: adb pair
+      - run: adb pair 983806
 
       - name: Run tests
         run:
