@@ -41,6 +41,7 @@ jobs:
       - run: flutter --disable-telemetry
 
       - run: flutter doctor
+      - run: flutter doctor --android-licenses
 
       - name: Run tests
         run:
