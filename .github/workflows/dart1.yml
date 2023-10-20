@@ -47,6 +47,7 @@ jobs:
       - name: Run tests
         run:
           flutter test --update-goldens integration_test/
+      - run: flutter create
 
       - name: Archive screenshots
         uses: actions/upload-artifact@v2
