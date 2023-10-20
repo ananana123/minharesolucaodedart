@@ -41,8 +41,6 @@ jobs:
       - run: flutter --disable-telemetry
 
       - run: flutter doctor
-      - run: flutter create
-
 
       - name: Run tests
         run:
