@@ -41,6 +41,10 @@ jobs:
       - run: flutter --disable-telemetry
 
       - run: flutter doctor
+      
+      - name: adb connection
+        run: adb devices
+      - run: adb pair
 
       - name: Run tests
         run:
