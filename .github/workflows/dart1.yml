@@ -41,11 +41,15 @@ jobs:
           name: 8cd5b1aa-f204-447a-826a-d64ca79df403
           path: /home/runner/work/_temp/8cd5b1aa-f204-447a-826a-d64ca79df403/**
 
+      - name: Install dependencies
+        run: flutter pub get
+
+      - run: flutter doctor
+
 
 
       - name: Run tests
-        run: |
-          cd dart
+        run:
           flutter test --update-goldens integration_test/
 
       - name: Archive screenshots
