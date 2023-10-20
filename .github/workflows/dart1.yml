@@ -35,6 +35,12 @@ jobs:
         with:
           channel: 'stable'
 
+      - name: Upload artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: 8cd5b1aa-f204-447a-826a-d64ca79df403
+          path: /home/runner/work/_temp/8cd5b1aa-f204-447a-826a-d64ca79df403/**
+
 
 
       - name: Run tests
