@@ -44,7 +44,8 @@ jobs:
 
 
       - name: Run tests
-        run:
+        run: |
+          cd dart
           flutter test --update-goldens integration_test/
 
       - name: Archive screenshots
