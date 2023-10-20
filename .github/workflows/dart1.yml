@@ -36,9 +36,9 @@ jobs:
           channel: 'stable'
 
       - name: Install dependencies
-        run: flutter pub get
-
-      - run: flutter doctor
+        run: flutter pub upgrade --major-versions
+      - run: flutter pub get
+      - run: flutter --disable-telemetry
 
 
 
