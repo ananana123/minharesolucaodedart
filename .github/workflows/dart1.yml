@@ -40,6 +40,8 @@ jobs:
       - run: flutter pub get
       - run: flutter --disable-telemetry
 
+      - run: flutter doctor
+
 
 
       - name: Run tests
