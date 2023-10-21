@@ -9,17 +9,8 @@ on:
 jobs:
   integration_test:
     runs-on: macos-latest
-    env:
-      IOS_DEVICE: 'iPhone 14 Pro Simulator (16.2)'
-    steps:
-      # - name: List all simulators
-      #   run: xcrun xctrace list devices
 
-      - name: Start Simulator
-        run: |
-          DEVICE=$(xcrun xctrace list devices | grep "^$IOS_DEVICE" | awk '{gsub(/[()]/,""); print $NF; exit}')
-          echo $DEVICE
-          xcrun simctl boot "${DEVICE:?No Simulator with this name found}"
+    steps:
 
       - name: Cache Flutter dependencies
         uses: actions/cache@v1
@@ -44,7 +35,14 @@ jobs:
       
 
       - name: Run tests
-        run:
+        uses: ReactiveCircus/android-emulator-runner@v2
+        with:
+           api-level: 30
+           target: google_apis
+           arch: x86_64
+           script: ./gradlew connectedCheck
+           
+      - run:
           flutter test --update-goldens integration_test/
 
       - name: Archive screenshots
