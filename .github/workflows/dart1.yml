@@ -38,6 +38,7 @@ jobs:
         with:
           java-version: 11
           distribution: 'adopt'
+          cache: 'gradle'
 
   
       - name: Run tests
@@ -46,7 +47,7 @@ jobs:
            api-level: 30
            target: google_apis
            arch: x86_64
-           script: ./integration_test/activity_test.dart
+           script: ./gradlew connectedCheck
 
       - run: flutter test --update-goldens integration_test/
 
