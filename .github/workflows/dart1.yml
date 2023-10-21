@@ -48,8 +48,9 @@ jobs:
            target: google_apis
            arch: x86_64
            script: ./gradlew connectedCheck
-
-      - run: flutter test --update-goldens integration_test/
+           
+      - run: cd ./gradlew
+         chmod +x ./gradlew
 
       - name: Archive screenshots
         uses: actions/upload-artifact@v2
