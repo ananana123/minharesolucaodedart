@@ -9,8 +9,17 @@ on:
 jobs:
   integration_test:
     runs-on: macos-latest
-
+    env:
+      IOS_DEVICE: 'iPhone 14 Pro Simulator (16.2)'
     steps:
+      # - name: List all simulators
+      #   run: xcrun xctrace list devices
+
+      - name: Start Simulator
+        run: |
+          DEVICE=$(xcrun xctrace list devices | grep "^$IOS_DEVICE" | awk '{gsub(/[()]/,""); print $NF; exit}')
+          echo $DEVICE
+          xcrun simctl boot "${DEVICE:?No Simulator with this name found}"
 
       - name: Cache Flutter dependencies
         uses: actions/cache@v1
@@ -32,39 +41,11 @@ jobs:
       - run: flutter --disable-telemetry
 
       - run: flutter doctor
+      
 
-      - uses: actions/cache@v2
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('**/buildSrc/**/*.kt') }}
-
-      - name: Copy  gradle properties file
-        run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
-
-      - name: Set up JDK 1.8
-        uses: actions/setup-java@v1
-        with:
-          java-version: 1.8
-
-      - name: Run detekt
-        run: ./gradlew detektCheck
-
-      - name: Run unit tests
-        run: ./gradlew test --stacktrace
-
-      - name: Build the app
-        run: ./gradlew assembleDebug
-  
       - name: Run tests
-        uses: ReactiveCircus/android-emulator-runner@v2
-        with:
-           api-level: 30
-           target: google_apis
-           arch: x86_64
-           script: ./gradlew connectedCheck --stacktrace
-           
+        run:
+          flutter test --update-goldens integration_test/
 
       - name: Archive screenshots
         uses: actions/upload-artifact@v2
